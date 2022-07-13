@@ -4,17 +4,38 @@
             <div class="card-header">
                 <h5 class="card-title">Tipo de Usuario</h5>
             </div>
-            <div class="card-body">         
-                   <div class="mb-3">
-                        <label class="form-label">Ingrese su Tipo</label>
-                        <input type="text" class="form-control" placeholder="" wire:model="tipos">
-                   </div>
-               
-                   <button type="button" class="btn btn-primary" wire:click="guardar">Guardar</button>
-                  
-                   <button type="button" class="btn btn-primary" wire:click="update">Actualizar</button>
-                  
-                    
+            <div class="card-body">  
+                   @if($InsertOrUpdate)    
+                   <form action="" wire:submit.prevent="guardar">
+                        <div class="mb-3">
+                            <label class="form-label">Ingrese su Tipo</label>
+                            <input type="text" class="form-control" placeholder="" wire:model="tipos">
+                            @error('tipos') <span class="error">{{ $message }}</span> @enderror
+                            <br>
+                            @if (session()->has('message'))
+                            <div class="alert alert-success">
+                                {{ session('message') }}
+                            </div>
+                            @endif
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                   </form>   
+                   @else
+                   <form action="" wire:submit.prevent="update">
+                        <div class="mb-3">
+                            <label class="form-label">Ingrese su Tipo</label>
+                            <input type="text" class="form-control" placeholder="" wire:model="tipos">
+                            @error('tipos') <span class="error">{{ $message }}</span> @enderror
+                        <br>
+                            @if (session()->has('message'))
+                            <div class="alert alert-success">
+                                    {{ session('message') }}
+                            </div>
+                            @endif
+                        </div>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>  
+                   </form>  
+                   @endif    
         </div>
     </div>
     </div>
@@ -27,7 +48,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Especialidad</th>
+                            <th>Rol</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,5 +73,6 @@
             </div>
         </div>
         </div>
+        {{ $t->links() }}
         </div>
     </div>

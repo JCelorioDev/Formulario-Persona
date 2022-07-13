@@ -4,15 +4,42 @@
             <div class="card-header">
                 <h5 class="card-title">Tipo de Especialidad</h5>
             </div>
-            <div class="card-body">         
-                   <div class="mb-3">
+            <div class="card-body">
+                   @if($InsertOrUpdate) 
+                   <form action="" wire:submit.prevent="guardar">
+                    <div class="mb-3">
                         <label class="form-label">Especialidad</label>
                         <input type="text" class="form-control" placeholder="" wire:model="especi">
-                   </div>
-               
-                   <button type="button" class="btn btn-primary" wire:click="guardar">Guardar</button>
-                  
-                   <button type="button" class="btn btn-primary" wire:click="update">Actualizar</button>
+                        @error('especi') <span class="error">{{ $message }}</span> @enderror
+                    </div>
+                    <br>
+                    <div>
+                        @if (session()->has('message'))
+                            <div class="alert alert-success">
+                                {{ session('message') }}
+                            </div>
+                        @endif
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                   </form>        
+                   @else
+                   <form action="" wire:submit.prevent="update">
+                    <div class="mb-3">
+                        <label class="form-label">Especialidad</label>
+                        <input type="text" class="form-control" placeholder="" wire:model="especi">
+                        @error('especi') <span class="error">{{ $message }}</span> @enderror
+                    </div>
+                    <br>
+                    <div>
+                        @if (session()->has('message'))
+                            <div class="alert alert-success">
+                                {{ session('message') }}
+                            </div>
+                        @endif
+                    </div>
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                   </form> 
+                   @endif
         </div>
     </div>
     </div>
@@ -51,5 +78,6 @@
         </div>
         </div>
         </div>
+        {{ $s->links() }}
     </div>
     

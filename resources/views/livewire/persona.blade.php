@@ -5,65 +5,147 @@
             <div class="card-header">
                 <h5 class="card-title">Registro de Personas</h5>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-12 col-lg-6">
-                        <div class="mb-3">
-                            <label>Roles</label>
-                            <select class="form-control select2" data-bs-toggle="select2" wire:model="id_tipo" style="cursor: pointer ">
-                                <option>Select...</option>
-                                @foreach ($t as $item)
-                                   <option value="{{$item->id}}">{{$item->tipo}}</option>
-                               @endforeach                         
-                            </select>
+            @if($InsertOrUpdate)
+            <form action="" wire:submit.prevent="guardar">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <div class="mb-3">
+                                <label>Buscar a una Persona en Especifico...</label>
+                                <input type="search" class="form-control" placeholder="Ingrese sus Nombres" wire:model="buscar">
+                                <label>Roles</label>
+                                <select class="form-control select2" data-bs-toggle="select2" wire:model="id_tipo" style="cursor: pointer ">
+                                    <option>Selecciona</option>
+                                    @foreach ($t as $item)
+                                       <option value="{{$item->id}}">{{$item->tipo}}</option>
+                                   @endforeach                         
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" wire:model="nom" >
+                                @error('nom') <span class="error">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label>Apellido</label>
+                                <input type="text" class="form-control" wire:model="ape" >
+                                @error('ape') <span class="error">{{ $message }}</span> @enderror
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label>Telefono</label>
+                                <input type="text" class="form-control" wire:model="telf">
+                                @error('telf') <span class="error">{{ $message }}</span> @enderror
+                            </div>  
+                            <br> 
                         </div>
-                        <div class="mb-3">
-                            <label>Nombre</label>
-                            <input type="text" class="form-control" wire:model="nom" >
+    
+                        <div class="col-12 col-lg-6">
+                            <div class="mb-3">
+                                <label>Especialidad</label>
+                                <select class="form-control select2" data-bs-toggle="select2" wire:model="id_especialidad" style="cursor: pointer ">
+                                    <option>Selecciona</option>
+                                    @foreach ($s as $item2)
+                                       <option value="{{$item2->id}}">{{$item2->especialidad}}</option>
+                                   @endforeach                         
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label>Cedula</label>
+                                <input type="text" class="form-control" wire:model="CI">
+                                @error('CI') <span class="error">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label>Direccion</label>
+                                <input type="text" class="form-control" wire:model="dir"> 
+                                @error('dir') <span class="error">{{ $message }}</span> @enderror                         
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label>Apellido</label>
-                            <input type="text" class="form-control" wire:model="ape" >
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label>Telefono</label>
-                            <input type="text" class="form-control" wire:model="telf">
-                        </div>  
-                        <button type="button" class="btn btn-primary" wire:click="guardar">Guardar</button>   
-                        <button type="button" class="btn btn-primary" wire:click="update">Actualizar</button>
-                                        
                     </div>
-
-                    <div class="col-12 col-lg-6">
-                        <div class="mb-3">
-                            <label>Especialidad</label>
-                            <select class="form-control select2" data-bs-toggle="select2" wire:model="id_especialidad" style="cursor: pointer ">
-                                <option>Select...</option>
-                                @foreach ($s as $item2)
-                                   <option value="{{$item2->id}}">{{$item2->especialidad}}</option>
-                               @endforeach                         
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label>Cedula</label>
-                            <input type="text" class="form-control" wire:model="CI">
-                        </div>
-                        <div class="mb-3">
-                            <label>Direccion</label>
-                            <input type="text" class="form-control" wire:model="dir">                          
-                        </div>
+                    <div>
+                        @if (session()->has('message'))
+                            <div class="alert alert-success">
+                                {{ session('message') }}
+                            </div>
+                        @endif
                     </div>
-                       
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
-            </div>
+            </form>
+            @else
+            <form action="" wire:submit.prevent="update">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <div class="mb-3">
+                                <label>Buscar a una Persona en Especifico...</label>
+                                <input type="search" class="form-control" placeholder="Ingrese sus Nombres" wire:model="buscar">
+                                <label>Roles</label>
+                                <select class="form-control select2" data-bs-toggle="select2" wire:model="id_tipo" style="cursor: pointer ">
+                                    <option>Selecciona</option>
+                                    @foreach ($t as $item)
+                                       <option value="{{$item->id}}">{{$item->tipo}}</option>
+                                   @endforeach                         
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" wire:model="nom" >
+                                @error('nom') <span class="error">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label>Apellido</label>
+                                <input type="text" class="form-control" wire:model="ape" >
+                                @error('ape') <span class="error">{{ $message }}</span> @enderror
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label>Telefono</label>
+                                <input type="text" class="form-control" wire:model="telf">
+                                @error('telf') <span class="error">{{ $message }}</span> @enderror
+                            </div>  
+                            <br> 
+                        </div>
+    
+                        <div class="col-12 col-lg-6">
+                            <div class="mb-3">
+                                <label>Especialidad</label>
+                                <select class="form-control select2" data-bs-toggle="select2" wire:model="id_especialidad" style="cursor: pointer ">
+                                    <option>Selecciona</option>
+                                    @foreach ($s as $item2)
+                                       <option value="{{$item2->id}}">{{$item2->especialidad}}</option>
+                                   @endforeach                         
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label>Cedula</label>
+                                <input type="text" class="form-control" wire:model="CI">
+                                @error('CI') <span class="error">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label>Direccion</label>
+                                <input type="text" class="form-control" wire:model="dir"> 
+                                @error('dir') <span class="error">{{ $message }}</span> @enderror                         
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        @if (session()->has('message'))
+                            <div class="alert alert-success">
+                                {{ session('message2') }}
+                            </div>
+                        @endif
+                    </div>
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                </div>
+            </form>
+            @endif
         </div>
     </div>
     <div class="row justify-content-center;" style="position: relative; top: 40px">
         <div class="col-12" >
         <div class="card">
             <div class="card-body">
-     
                 <table id="datatables-reponsive" class="table table-striped" style="width:100%" >
                     <thead>
                         <tr>
@@ -113,7 +195,7 @@
                         @endforeach
                     </tbody>
                 </table>
-    
+                {{ $p->links() }}
             </div>
         </div>
         </div>
